@@ -1,0 +1,12 @@
+﻿<cfoutput>
+	#prc.html.chooseGroup(
+		name=field.getName(),
+		label=field.getLabel(),
+		required=field.getIsRequired(),
+		field=field.getName(),
+		options=field.getFieldOptions(),
+		id=field.getCSSID(),
+		class=field.getCSSClass(),
+		type="radio"
+	)#
+</cfoutput>

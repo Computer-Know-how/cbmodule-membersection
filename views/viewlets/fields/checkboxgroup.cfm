@@ -1,0 +1,15 @@
+﻿<cfoutput>
+	#prc.html.chooseGroup(
+		type="checkbox",
+		field=field.getName(),
+		label=field.getLabel(),
+		name=field.getName(),
+		options=field.getFieldOptions(),
+		id=field.getCSSID(),
+		class=field.getCSSClass()
+	)#
+	<!---
+		required=field.getIsRequired(),
+		value=option.getActualValue(),
+	--->
+</cfoutput>
