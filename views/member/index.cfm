@@ -40,7 +40,6 @@
 							</tr>
 						</thead>
 						<tbody>
-							<!--- Loop over members --->
 							<cfloop array="#prc.members#" index="member">
 								<tr>
 									<td>
