@@ -26,7 +26,6 @@
 								#html.startForm(name="memberForm",action=prc.xehMembersave,novalidate="novalidate")#
 									#html.startFieldset(legend="Member Details")#
 										#html.hiddenField(name="memberID",bind=prc.member)#
-										<!--- #html.hiddenField(name="sluggerURL",value=event.buildLink(prc.xehSlugify))# --->
 										<!--- Fields --->
 										<div class="form-group">
 											#html.textField(name="firstName",bind=prc.member,label="*First Name:",required="required",class="form-control")#
@@ -37,16 +36,13 @@
 										</div>
 
 										<div class="form-group">
-											#html.textField(name="username",bind=prc.member,label="*Username:",required="required",class="form-control")#
-										</div>
-
-										<div class="form-group">
 											#html.textField(name="email",bind=prc.member,label="*Email Address:",required="required",class="form-control")#
 										</div>
-
-										<div class="form-group">
-											#html.textField(name="password",bind=prc.member,label="*Password:",required="required",class="form-control")#
-										</div>
+										<cfif !len(prc.member.getMemberID())>
+											<div class="form-group">
+												#html.textField(name="password",bind=prc.member,label="*Password:",required="required",class="form-control")#
+											</div>
+										</cfif>
 
 										<div class="form-actions">
 											<button class="btn" onclick="return to('#event.buildLink(prc.xehMembers)#')">Cancel</button>

@@ -33,7 +33,6 @@
 						<thead>
 							<tr>
 								<th>Name</th>
-								<th>Username</th>
 								<th>Email</th>
 								<th>Created Date</th>
 								<th width="90" class="center {sorter:false}">Actions</th>
@@ -46,7 +45,6 @@
 										<a href="#event.buildLink(prc.xehMemberEditor)#/memberID/#member.getMemberID()#"
 										title="Edit #member.getFirstName()# #member.getLastName()#">#member.getFirstName()# #member.getLastName()#</a>
 									</td>
-									<td>#member.getUsername()#</td>
 									<td>#member.getEmail()#</td>
 									<td>#dateFormat(member.getCreatedDate(),"short")# #timeFormat(member.getCreatedDate(),"short")#</td>
 									<td class="center">
@@ -54,7 +52,6 @@
 										<a class="btn btn-info btn-sm" href="#event.buildLink(prc.xehMemberEditor)#/memberID/#member.getMemberID()#"
 										title="Edit #member.getFirstName()# #member.getLastName()#"><i class="fa fa-pencil"></i></a>
 										<!--- Delete Command --->
-										<!--- removeForm --->
 										<a class="btn btn-danger btn-sm confirmIt" title="Delete Member" href="javascript:removeMember('#member.getMemberID()#')" data-title="Delete Member?"><i id="delete_#member.getMemberID()#" class="fa fa-trash"></i></a>
 									</td>
 								</tr>

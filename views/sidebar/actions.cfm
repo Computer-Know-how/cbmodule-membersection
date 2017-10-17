@@ -9,7 +9,6 @@
 		<div class="panel-body">
 			<!--- xehForms --->
 			<button class="btn btn-danger" style="margin-right: 5px" onclick="return to('#event.buildLink(prc.xehMembers)#')">Members</button>
-			<button class="btn" onclick="return to('#event.buildLink('cbadmin.module.cbMemberSection.settings.index')#')" title="Set global form settings">Settings</button>
 		</div>
 	</div>
 </cfoutput>

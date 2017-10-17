@@ -13,33 +13,16 @@ component extends="base" {
 	}
 
 
-	// slugify remotely
-	// function slugify(event,rc,prc){
-	// 	event.renderData(data=getInstance("HTMLHelper@coldbox").slugify( rc.slug ),type="plain");
-	// }
-
-
 	// member editor
 	function editor(event,rc,prc){
 		// exit handlers
 		prc.xehMembersave 		= "cbMemberSection.member.save";
-		//prc.xehSlugify	  		= "cbMemberSection.member.slugify";
 
 		// get new or persisted member
 		prc.member  = memberService.get( event.getValue("memberID",0) );
 
 		//repopulate member form failed save
 		memberService.populate(prc.member,rc);
-
-		// viewlets
-		// prc.fieldsViewlet = "";
-		// if( prc.form.isLoaded() ){
-		// 	var args = {memberID=rc.memberID};
-		// 	prc.fieldsViewlet = runEvent(event="contentbox-membersection:form.fields",eventArguments=args);
-		// }
-
-		// Editor
-		//prc.tabForms_editor = true;
 
 		// view
 		event.setView("member/editor");
@@ -51,12 +34,25 @@ component extends="base" {
 
 		// get it and populate it
 		var oMember = populateModel( memberService.get(id=rc.memberID) );
-
+		if(!oMember.isLoaded()){
+			oMember.updatePassword();
+		}
 		// validate it
 		var errors = oMember.validate();
-		if( !arrayLen(errors) ){
+		// create criteria for uniqueness
+		var c = memberService.newCriteria()
+			.isEq( "email", rc.email );
+
+		// Existing user, don't include it in the check
+		if( oMember.isLoaded() ) {
+			c.ne( "memberID", javacast("int",rc.memberID) );
+		}
+		if(c.count() GT 0){
+			arrayAppend(errors,'Email must be unique.');
+		}
+		if( !arrayLen(errors) && c.count() EQ 0 ){
 			// save content
-			memberService.save( oMember );
+			memberService.save(oMember);
 			// Message
 			getInstance("messageBox@cbMessageBox").info("Member saved! Now you are happy!");
 			setNextEvent(event='cbMemberSection.member.index',queryString="memberID=#oMember.getMemberID()#");

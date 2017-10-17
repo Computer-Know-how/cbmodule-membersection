@@ -24,8 +24,6 @@ component {
 		settings = {
 			// default containers and classes for the html helper form elements
 			htmlHelper = { groupWrapper = "", groupWrapperClass = "", labelWrapper = "", labelWrapperClass = "", label = "", labelClass = "", helpWrapper = "", helpWrapperClass = "", wrapper = "" , wrapperClass = "" },
-			// get your keys at https://www.google.com/recaptcha/admin/create
-			reCAPTCHA = { publicKey = "", privateKey = "" }
 		};
 
 		// SES Routes

@@ -14,15 +14,9 @@ component{
 		// get module root
 		prc.moduleRoot = event.getModuleRoot( "contentbox-membersection" );
 
-		// if data isn't setup, redirect user
-		// if( !FormSubmissionService.isDataSetup() && event.getCurrentEvent() NEQ "contentbox-membersection:form.noDataSetup") {
-		// 	setNextEvent("cbMemberSection.form.noDataSetup");
-		// }
-
 		// exit points
 		prc.xehMembers = "cbMemberSection.member.index";
 		prc.xehMemberEditor = "cbMemberSection.member.editor";
-		//prc.xehMemberSettings = "cbMemberSection.settings.index";
 
 		//check login and redirect is needed.
 		if(!prc.oCurrentAuthor.isLoaded()){
