@@ -20,79 +20,47 @@ component {
 
 	function configure(){
 
-		// module settings - stored in modules.name.settings
-		settings = {
-			// default containers and classes for the html helper form elements
-			htmlHelper = { groupWrapper = "", groupWrapperClass = "", labelWrapper = "", labelWrapperClass = "", label = "", labelClass = "", helpWrapper = "", helpWrapperClass = "", wrapper = "" , wrapperClass = "" },
-		};
-
-		// SES Routes
-		routes = [
-			{pattern="/", handler="member",action="index"},
-			// Convention Route
-			{pattern="/:handler/:action?"}
-		];
-
-		// Interceptors
-		interceptors = [
-			{ class="#moduleMapping#.interceptors.CBFRequest", properties={ entryPoint="cbadmin" }, name="CBFRequest@cbMemberSection" }
-		];
-	}
-
-	/**
-	* Fired when the module is registered and activated.
-	*/
-	function onLoad(){
-
-		// ContentBox loading
-		if( structKeyExists( controller.getSetting("modules"), "contentbox" ) ){
-			// Let's add ourselves to the main menu in the Modules section
-			var menuService = controller.getWireBox().getInstance("AdminMenuService@cb");
-			// Add Menu Contribution
-			menuService.addSubMenu(topMenu=menuService.MODULES,name="cbMemberSection",label="Member Section",href="#menuService.buildModuleLink('cbMemberSection','member.index')#");
-		}
 	}
 
 	/**
 	* Fired when the module is activated
 	*/
 	function onActivate(){
-		var settingService = controller.getWireBox().getInstance("SettingService@cb");
-		// store default settings
-		var findArgs = {name="member_section"};
-		var setting = settingService.findWhere(criteria=findArgs);
-		if( isNull(setting) ){
-			var args = {name="member_section", value=serializeJSON( settings )};
-			var memberSectionSettings = settingService.new(properties=args);
-			settingService.save( memberSectionSettings );
+		var permissionService = controller.getWireBox().getInstance("PermissionService@cb");
+		var roleService = controller.getWireBox().getInstance("RoleService@cb");
+		var ruleService = controller.getWireBox().getInstance("securityRuleService@cb");
+		var permissionExists = permissionService.findAllWhere({permission="MEMBER_ONLY"});
+		if(!arrayLen(permissionExists)){
+			var oPermission = permissionService.get(0);
+			oPermission.setPermission("MEMBER_ONLY");
+			oPermission.setDescription("Access to the member pages.");
+			permissionService.save(oPermission);
+			var oAdmin = roleService.findWhere({role="Administrator"});
+			oAdmin.addPermission(oPermission);
+			roleService.save(oAdmin);
 		}
-
-		// Flush the settings cache so our new settings are reflected
-		settingService.flushSettingsCache();
-	}
-
-	/**
-	* Fired when the module is unregistered and unloaded
-	*/
-	function onUnload(){
-		// ContentBox unloading
-		if( structKeyExists( controller.getSetting("modules"), "contentbox" ) ){
-			// Let's remove ourselves to the main menu in the Modules section
-			var menuService = controller.getWireBox().getInstance("AdminMenuService@cb");
-			// Remove Menu Contribution
-			menuService.removeSubMenu(topMenu=menuService.MODULES,name="cbMemberSection");
+		var roleExists = roleService.findAllWhere({role="Member"});
+		if(!arrayLen(roleExists)){
+			var oRole = roleService.get(0);
+			oRole.setRole("Member");
+			oRole.setDescription("A site member");
+			var permissions = permissionService.findAllWhere({permission="MEMBER_ONLY"});
+			oRole.setPermissions(permissions);
+			roleService.save(oRole);
 		}
-	}
-
-	/**
-	* Fired when the module is deactivated by ContentBox Only
-	*/
-	function onDeactivate(){
-		var settingService = controller.getWireBox().getInstance("SettingService@cb");
-		var args = {name="member_section"};
-		var setting = settingService.findWhere(criteria=args);
-		if( !isNull(setting) ){
-			settingService.delete( setting );
+		var ruleData = {
+			secureList = '^member',
+			redirect = 'cbadmin/security/login',
+			permissions = 'MEMBER_ONLY',
+			order = 0,
+			match = 'url',
+			useSSL = false
+		};
+		var ruleExists = ruleService.findAllWhere({secureList="^member"});
+		if(!arrayLen(ruleExists)){
+			var oRule = ruleService.get(0);
+			ruleService.populate(oRule,ruleData);
+			ruleService.save(oRule);
 		}
 	}
 

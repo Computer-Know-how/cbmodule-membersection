@@ -1,25 +1,22 @@
-ContentBox Form Builder Module
+ContentBox Member Section Module
 =================
 
 Author
 -----------------
-Computer Know How, LLC/Curt Gratz
+Computer Know How, LLC/Dan Roemer
 
 Description
 -----------------
-Module for ContentBox to generate Forms, install from the Module panel in ContentBox
+Module for ContentBox to set up member only roles and permissions to be used to secure the member url.
 
 Installation
 -----------------
-Drop the 'contentbox-formbuilder' folder into your modules/contentbox/modules_user folder within your ContentBox enabled application, or install via the ContentBox Modules ForgeBox link.
+Drop the 'contentbox-membersection' folder into your modules/contentbox/modules_user folder within your ContentBox enabled application, or install via the ContentBox Modules ForgeBox link.
 
 Usage
 -----------------
-Use the Form Builder menu link to go to the form builder admin section.  In the form builder admin section you can create your forms and view form submissions.  Add a form to a page using the form builder widget in the ContentBox CKEditor.
+Use the member section module to easily add security to the /member path. On activation, it will add the Members role, MEMBER_ONLY permission, and security settings needed to secure the member route.
 
 Change Log
 -----------------
-* Version 2.0  - Updated for ContentBox 3
-* Version 1.5  - Supports ContentBox version 1.5+, Updated UI, Bug Fixes, Admin Validation
-* Version 1.0  - Supports up to ContentBox version 1.2, Bug Fixes, Integrated widget, Style updates, reCapcha support
-* Version 0.01  - Initial Release
+* Version 1.0  - Initial Release
