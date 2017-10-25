@@ -1,8 +1,8 @@
 {
-	"location": "https://github.com/Computer-Know-how/cbmodule-membersection/archive/master.zip",
+	"location": "https://github.com/Computer-Know-how/cbmodule-membersection/raw/master/contentbox-membersection.zip",
 	"name": "Member Section",
 	"packageDirectory": "contentbox-membersection",
-	"slug": "ContentBox-membersection-Module",
+	"slug": "cbmodule-membersection",
 	"type": "contentbox-modules",
 	"version": "1.0"
 }
